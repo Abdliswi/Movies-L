@@ -4,11 +4,14 @@ const app = express();
 const dotenv = require('dotenv');
 const axios = require('axios').default;
 const data = require('./Movie Data/data.json');
+const pg = require("pg");
 
 dotenv.config();
 
 const PORT = process.env.PORT;
 const API_KEY = process.env.API_KEY;
+const DATABASE_URL = process.env.DATABASE_URL;
+const client = new pg.Client(DATABASE_URL);
 
 function MovieData(id, title, release_date, poster, overview) {
     this.id = id;
@@ -105,9 +108,41 @@ app.use(function (err, req, res, next) {
         "responseText": "Sorry, something went wrong"
     });
 });
-
-app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`)
+app.post('/addMovie', (req, res) => {
+    console.log('Got body:', req.body);
+    //res.sendStatus(200);
+    let movie = req.body;
+    const sql = `INSERT INTO favMovies (title, release_date, poster_path, overview, comment) VALUES ($1, $2, $3, $4, $5)`;
+    console.log(`sql=${sql}`);
+    let values = [movie.title, movie.release_date, movie.poster_path, movie.overview, movie.comment];
+    dbClient.query(sql, values).then((d) => {
+        console.log(`query done`);
+        return res.sendStatus(201);
+    }).catch(function (error) {
+        // handle error
+        console.log(error);
+        res.sendStatus(500).send("error while adding movie to database: " + error)
+    });
 });
 
+app.get('/getMovies', (req, res) => {
+    console.log("/getMovies()")
+
+    const sql=`SELECT * FROM favMovies`;
+
+    dbClient.query(sql).then(data =>{
+       return res.status(200).json(data.rows);
+    }).catch(function (error) {
+        // handle error
+        console.log(error);
+        res.status(500).send("error while get all movies from database, error: " + error)
+    });
+});
+
+
+client.connect().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Listen on ${PORT}`);
+    });
+});
 
