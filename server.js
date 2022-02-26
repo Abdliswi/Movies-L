@@ -2,8 +2,11 @@
 const express = require('express');
 const app = express();
 const data = require('./MovieData/data.json');
-const axios = require('axios').default;
+const axios = require('axios');
+const pg = require("pg");                                    // adding the pg here 
 require("dotenv").config();
+const DATABASE_URL = process.env.DATABASE_URL;              // adding the pg here 
+const client = new pg.Client(DATABASE_URL);                   // adding the DATABASE_URL here 
 
 
 
@@ -15,7 +18,7 @@ function MovieData(id, title, release_date, poster, overview) {
     this.poster_path = poster;
     this.overview = overview;
 }
-
+app.use(express.json());
 app.use(function errorHandler (err, req, res, next) {
     let error ={
         status:500,
@@ -91,8 +94,26 @@ app.get('/search',(req,res)=>{
         errorHandler (err, req, res, next);
     })
 });
-
-
+app.get("/getMovies", (req, res)=>{
+    const movie = req.body;
+    const sql =`INSERT INTO TheMovieTable(title, release_date, poster_path, overview,comment) VALUES($1, $2, $3, $4, $5) RETURNING *;`;
+    const values = [movie.title, movie.release_date,movie.poster_path,movie.overview,movie.comment];
+    
+    client.query(sql, values).then((result) => {
+        return res.status(201).json(result.rows);
+    }).catch((error) => {
+        errorHandler(error, req, res);
+    });
+});
+app.post("/addMovie", (req, res)=>{
+    const sql = `SELECT * FROM TheMovieTable;`;  
+    client.query(sql).then((result) => {
+    return res.status(200).json(result.rows);
+    }).catch((error) => {
+    errorHandler(error, req, res);
+});
+});
+   
 app.use("*", (req, res) =>{
     return res.status(404).send("Page Not Found");
 
