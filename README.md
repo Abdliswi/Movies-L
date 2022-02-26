@@ -4,7 +4,7 @@
 
 ## WRRC
 
-![image](/assests/WRRC2.PNG)
+![image](/assests/WRRC3.PNG)
 
 
 ## Overview
@@ -25,3 +25,5 @@ build server
  5) popular Page
  6) last Page
  7) not found Page
+ 8) add movie 
+ 9) get movie
