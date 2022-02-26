@@ -1,4 +1,3 @@
-
 'use strict';
 const express = require('express');
 const app = express();
@@ -27,7 +26,7 @@ app.get('/', (req, res) => {             // to establish a path when client ente
 app.get('/favorite', (req, res) => {        // to establish a path 
     res.send("Welcome to Favorite Page");
     //      res.json("Welcome to Favorite Page"); same to prev one 
-
+});
 // to turn on the server from this 
 app.listen(3000, () => {    
     console.log(`Example app listening on port 3000`)
