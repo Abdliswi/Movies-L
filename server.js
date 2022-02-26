@@ -40,7 +40,6 @@ app.get('/favorite', (req, res) => {        // to establish a path
 });
 
 let urlTr =`https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.APIKEY}`;
-let urlSearch =`https://api.themoviedb.org/3/search/movie?api_key=${process.env.APIKEY}&language=en-US&query=${search || "The"}&page=2`;
 
 app.get("/popular",(req,res)=>{
     let result = [];
@@ -57,7 +56,7 @@ app.get("/popular",(req,res)=>{
 } );
 
 app.get("/latest", (req,res)=>{
-    axios.get(`https://api.themoviedb.org/3/movie/latest?api_key=${APIKEY}&language=en-US`)
+    axios.get(`https://api.themoviedb.org/3/movie/latest?api_key=${process.env.APIKEY}&language=en-US`)
     .then(apiResponse => {
         return res.status(200).json(apiResponse.data);
     }).catch(error => {
@@ -78,9 +77,11 @@ app.get('/trending',(req,res)=>{
         errorHandler (err, req, res, next);
     })
 });
+
 app.get('/search',(req,res)=>{
+    const search = req.query.query
     let newarr=[];
-    axios.get(urlSearch)
+    axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.APIKEY}&language=en-US&query=${search || "The"}&page=2`)
     .then((result)=>{
         result.data.results.forEach((element) => {
             newarr.push(new MovieData(element.id,element.title,element.release_date,element.poster_path,element.overview))
@@ -99,7 +100,7 @@ app.use("*", (req, res) =>{
 
 
 // to turn on the server from this 
-app.listen(3000, () => {    
+app.listen(process.env.PORT, () => {    
     console.log(`Example app listening on port 3000`)
 });
 
