@@ -1,10 +1,10 @@
-# Movies-Library - Project Version 1
+# Movies-Library - Project Version 4.0
 
 **Author Name**: Abd Alhameed Liswi
 
 ## WRRC
 
-![image](/assests/WRRC3.PNG)
+![image](/assests/WRRC4.PNG)
 
 ## Overview
 
@@ -27,3 +27,8 @@ build server
  7) not found Page
  8) add movie 
  9) get movie
+ 10) update movie
+ 11) delete movie
+ 12) get specific movie
+
+ 
