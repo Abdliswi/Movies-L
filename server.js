@@ -1,3 +1,4 @@
+
 'use strict';
 const express = require('express');
 const app = express();
@@ -7,9 +8,6 @@ const pg = require("pg");                                    // adding the pg he
 require("dotenv").config();
 const DATABASE_URL = process.env.DATABASE_URL;              // adding the pg here 
 const client = new pg.Client(DATABASE_URL);                   // adding the DATABASE_URL here 
-
-
-
 
 function MovieData(id, title, release_date, poster, overview) {
     this.id = id;
@@ -26,7 +24,6 @@ app.use(function errorHandler (err, req, res, next) {
     };
     res.status(500).send(error)
   })
-
 
 app.get('/', (req, res) => {             // to establish a path when client enter link get this func from server 
     let result = [];
@@ -122,6 +119,6 @@ app.use("*", (req, res) =>{
 
 // to turn on the server from this 
 app.listen(process.env.PORT, () => {    
-    console.log(`Example app listening on port 3000`)
+    console.log(`Example app listening on port ${process.env.PORT}`)
 });
 
