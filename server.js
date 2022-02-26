@@ -1,32 +1,33 @@
-const express = require('express');
-const data = require('./MovieData/data.json') // path of data
+const express = require('express');         
 const app = express();
-const port = 3000;
 
-function MovieData(title, poster_path, overview,){
+const data = require('./MovieData/data.json')
+
+
+function MovieData(id, title, release_date, poster, overview) {
+    this.id = id;
     this.title = title;
-    this.poster_path = poster_path;
+    this.release_date = release_date;
+    this.poster_path = poster;
     this.overview = overview;
-};
+}
 
-app.get('/', (req, res) => { //
+app.get('/', (req, res) => {             // to establish a path 
     let result = [];
     data.data.forEach((value) => {
-        let oneMovie = new MovieData(value.title,value.poster_path, value.overview);
+        let oneMovie = new Movies(value.title,value.poster_path, value.overview);
         result.push(oneMovie);
     });
     return res.json(result);
 });
 
-
-
-app.get('/favorite', (req, res) => {    
-    res.json("Welcome to Favorite Page");
-//    res.send("Welcome to Favorite Page");
-
+app.get('/favorite', (req, res) => {        // to establish a path 
+    res.send("Welcome to Favorite Page");
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-});
 
+
+// to turn on the server from this 
+app.listen(3000, () => {    
+    console.log(`Example app listening on port 3000`)
+});
