@@ -1,7 +1,10 @@
-const express = require('express');         
-const app = express();
 
-const data = require('./MovieData/data.json')
+'use strict';
+const express = require('express');
+const app = express();
+const data = require('./MovieData/data.json');
+
+
 
 
 function MovieData(id, title, release_date, poster, overview) {
@@ -24,10 +27,6 @@ app.get('/', (req, res) => {             // to establish a path when client ente
 app.get('/favorite', (req, res) => {        // to establish a path 
     res.send("Welcome to Favorite Page");
     //      res.json("Welcome to Favorite Page"); same to prev one 
-
-});
-
-
 
 // to turn on the server from this 
 app.listen(3000, () => {    
