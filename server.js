@@ -12,10 +12,10 @@ function MovieData(id, title, release_date, poster, overview) {
     this.overview = overview;
 }
 
-app.get('/', (req, res) => {             // to establish a path 
+app.get('/', (req, res) => {             // to establish a path when client enter link get this func from server 
     let result = [];
     data.data.forEach((value) => {
-        let oneMovie = new Movies(value.title,value.poster_path, value.overview);
+        let oneMovie = new MovieData(value.title,value.poster_path, value.overview);
         result.push(oneMovie);
     });
     return res.json(result);
@@ -23,6 +23,8 @@ app.get('/', (req, res) => {             // to establish a path
 
 app.get('/favorite', (req, res) => {        // to establish a path 
     res.send("Welcome to Favorite Page");
+    //      res.json("Welcome to Favorite Page"); same to prev one 
+
 });
 
 

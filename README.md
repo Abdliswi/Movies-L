@@ -1,7 +1,6 @@
 # Movies-Library - Project Version 1
 
 **Author Name**: Abd Alhameed Liswi
-
 ## WRRC
 
 ![image](/assests/WRRC.PNG)
@@ -17,5 +16,5 @@ build server
 
 ## Project Features
 
- 1) Movie Information
+ 1) Movie details
  2) favorite Page
