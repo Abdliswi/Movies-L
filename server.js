@@ -7,7 +7,11 @@ const axios = require('axios');
 const pg = require("pg");                                    // adding the pg here 
 require("dotenv").config();
 const DATABASE_URL = process.env.DATABASE_URL;              // adding the pg here 
-const client = new pg.Client(DATABASE_URL);                   // adding the DATABASE_URL here 
+//const client = new pg.Client(DATABASE_URL);                   // adding the DATABASE_URL here 
+const client = new pg.Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false}
+});
 
 function MovieData(id, title, release_date, poster, overview) {
     this.id = id;
@@ -152,7 +156,9 @@ app.use("*", (req, res) =>{
 
 
 // to turn on the server from this 
-app.listen(process.env.PORT, () => {    
-    console.log(`Example app listening on port ${process.env.PORT}`)
+client.connect().then(() => {
+    app.listen(PORT, () => {
+        console.log(Listen on ${PORT});
+    });
 });
 
