@@ -157,8 +157,8 @@ app.use("*", (req, res) =>{
 
 // to turn on the server from this 
 client.connect().then(() => {
-    app.listen(PORT, () => {
-        console.log(Listen on ${PORT});
+    app.listen(process.env.PORT, () => {
+        console.log(Listen on ${process.env.PORT});
     });
 });
 
